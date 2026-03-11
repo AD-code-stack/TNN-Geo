@@ -1,0 +1,41 @@
+# IP地理定位配置文件
+
+# 延迟邻居参数
+latency_neighbors:
+  # 高准确性配置 (适配小数据集)
+  high_accuracy:
+    max_latency_diff: 2   # X: 最大延迟差（毫秒）
+    max_rtt: 2          # Y: 最大RTT（毫秒）
+  
+  # 高覆盖率配置 (适配小数据集)
+  high_coverage:
+    max_latency_diff: 3   # X: 最大延迟差（毫秒）
+    max_rtt: 9           # Y: 最大RTT（毫秒）
+  
+  # 使用中位RTT消除异常值
+  use_median_rtt: true
+  min_traceroute_instances: 1  # 最少traceroute实例数 (小数据集用1)
+
+# IP范围插值参数
+ip_range_interpolation:
+  range_size: 256        # IP范围大小（/24网段）
+  min_ground_truth: 2    # n: 最少ground truth IP数量
+  max_distance_km: 25    # m: 最大距离（公里）
+  netmask: 24            # 网络掩码
+
+# 位置传播参数
+location_propagation:
+  mode: "high_accuracy"  # 模式：high_accuracy 或 high_coverage
+  max_iterations: 10     # 最大迭代次数
+  convergence_threshold: 0.01  # 收敛阈值
+
+# 数据路径
+data_paths:
+  traceroute_dir: "data/traceroute"
+  ground_truth_file: "data/ground_truth/ground_truth.csv"
+  output_dir: "data/output"
+
+# 评估参数
+evaluation:
+  distance_thresholds: [10, 20, 50, 100]  # 距离阈值（公里）
+  cross_validation_folds: 10  # 交叉验证折数
