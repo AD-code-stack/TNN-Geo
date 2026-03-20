@@ -19,7 +19,7 @@ def main():
     print("="*60)
     
     # 1. 加载配置
-    print("\n[1/5] 加载配置...")
+    print("\n[1/6] 加载配置...")
     config = ConfigLoader()
     data_paths = config.get_data_paths()
     
@@ -28,19 +28,19 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # 2. 加载Ground Truth数据
-    print("\n[2/5] 加载Ground Truth数据...")
+    print("\n[2/6] 加载Ground Truth数据...")
     gt_loader = GroundTruthLoader(data_paths['ground_truth_file'])
     ground_truth = gt_loader.ip_to_location
     print(f"  加载了 {len(ground_truth)} 个IP的位置信息")
     
     # 3. 解析Traceroute数据
-    print("\n[3/5] 解析Traceroute数据...")
+    print("\n[3/6] 解析Traceroute数据...")
     parser = TracerouteParser()
     traceroutes = parser.parse_directory(data_paths['traceroute_dir'])
     print(f"  解析了 {len(traceroutes)} 条traceroute记录")
     
     # 4. 提取延迟邻居
-    print("\n[4/5] 提取延迟邻居...")
+    print("\n[4/6] 提取延迟邻居...")
     
     # 高准确性配置
     print("  配置: 高准确性")
@@ -69,7 +69,7 @@ def main():
     extractor_cov.save(output_dir / 'latency_neighbors_high_coverage.csv')
     
     # 5. IP范围插值
-    print("\n[5/5] IP范围插值...")
+    print("\n[5/6] IP范围插值...")
     ip_config = config.get_ip_range_config()
     interpolator = IPRangeInterpolator(
         range_size=ip_config['range_size'],
@@ -91,7 +91,7 @@ def main():
     interpolator.save_interpolated(interpolated, output_dir / 'interpolated_ips.csv')
     
     # 6. 位置传播
-    print("\n[6/5] 位置传播...")
+    print("\n[6/6] 位置传播...")
     prop_config = config.get_propagation_config()
     propagator = LocationPropagator(
         max_iterations=prop_config['max_iterations'],
